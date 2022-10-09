@@ -2,18 +2,19 @@
 #![warn(clippy::missing_docs_in_private_items)]
 
 //! A simple SubRip file parser. Example usage -
-//! 
+//!
 //! ```rust
 //! use std::path::PathBuf;
+//!
 //! use srt_parser::SubRipFile;
-//! 
+//!
 //! fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     let subs = SubRipFile::new(PathBuf::from("test.srt"))?;
-//!     
+//!
 //!     for sub in subs.subtitles() {
-//!       println!("{:#?}", sub);
+//!         println!("{:#?}", sub);
 //!     }
-//! 
+//!
 //!     Ok(())
 //! }
 //! ```
@@ -103,7 +104,11 @@ impl Subtitle {
     pub fn new(source: String) -> Result<Self> {
         let lines = source.lines().collect::<Vec<&str>>();
         if lines.len() < 3 {
-            return Err(anyhow!("Invalid subtitle (length is {}): {:?}", lines.len(), lines));
+            return Err(anyhow!(
+                "Invalid subtitle (length is {}): {:?}",
+                lines.len(),
+                lines
+            ));
         }
         let sequence_number = parser::srt::sequence_number(lines[0].trim()).context(format!(
             "Could not parse a sequence number in the SRT file: {:?}",
