@@ -24,8 +24,9 @@ peg::parser! {
             let h: u8 = h.try_into().context("Could not parse hour as u8")?;
             let m: u8 = m.try_into().context("Could not parse minutes as u8")?;
             let s: u8 = s.try_into().context("Could not parse seconds as u8")?;
+            let ms: u16 = ms.try_into().context("Could not parse milliseconds as u16")?;
 
-            Time::from_hms_micro(h, m, s, ms).context("Could not parse time")
+            Time::from_hms_milli(h, m, s, ms).context("Could not parse time")
          }
 
     /// matches a timecode range in the format HH:MM:SS,mmm --> HH:MM:SS,mmm
