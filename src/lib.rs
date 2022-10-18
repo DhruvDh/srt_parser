@@ -46,7 +46,7 @@ pub struct SubRipFile {
 impl SubRipFile {
     /// Creates a new `SubTitleFile` from a path to a subtitle file
     pub fn new(path: PathBuf) -> Result<Self> {
-        let source = std::fs::read_to_string(&path).unwrap();
+        let source = std::fs::read_to_string(&path).context("Failed to read file as string.")?;
         let subtitles = source
             .lines()
             .into_iter()
