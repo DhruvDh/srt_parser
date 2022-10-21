@@ -61,7 +61,7 @@ impl SubRipFile {
                 }
             })
             .filter(|s| !s.trim().is_empty())
-            .map(Subtitle::new)
+            .map(Subtitle::from_string)
             .collect::<Result<Vec<Subtitle>>>()?;
 
         Ok(Self {
@@ -101,8 +101,18 @@ pub struct Subtitle {
 }
 
 impl Subtitle {
+    /// Creates a new `SubTitle`
+    pub fn new(sn: u32, s: Time, e: Time, t: String) -> Self {
+        Self {
+            sequence_number: sn,
+            start:           s,
+            end:             e,
+            text:            t,
+        }
+    }
+
     /// Creates a new `SubTitle` from a string
-    pub fn new(source: String) -> Result<Self> {
+    pub fn from_string(source: String) -> Result<Self> {
         let lines = source.lines().collect::<Vec<&str>>();
         if lines.len() < 3 {
             return Err(anyhow!(
