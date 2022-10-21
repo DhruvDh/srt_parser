@@ -88,7 +88,7 @@ impl SubRipFile {
 }
 
 /// A struct representing a subtitle
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Subtitle {
     /// The sequence number of the subtitle
     sequence_number: u32,
